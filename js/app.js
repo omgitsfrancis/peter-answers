@@ -1,17 +1,7 @@
 var model = {
     answer: "",
     answerToggle: false,
-    petitionText: "Peter please answer the following question",
-    invalidResponse: [
-        "That's not how you petition to Peter.",
-        "Invalid petition. Please try again.",
-        "You're not asking correctly",
-        "Why should I answer to that?",
-        "Please try again tomorrow. Or never...",
-        "I'm tired... Try again another time.",
-        "Not now, I'm busy. Maybe later.",
-        "Fix you petition please.",
-    ]
+    petitionText: "Peter please answer the following question"
 }
 
 var controller = {
@@ -31,8 +21,7 @@ var controller = {
             model.answer += e.data;
             view.renderInput();
         }
-        console.log("answer: ", model.answer);
-    
+        console.log("answer: ", model.answer);    
     },
 
     getPetitionChar: () => {
@@ -40,15 +29,27 @@ var controller = {
     },
 
     getAnswer: () => {
-        if(model.answer) {
-            return model.answer;
-        } else {
-            let randomNum = Math.floor(Math.random() * model.invalidResponse.length);
-            return model.invalidResponse[randomNum];
-        }
-        
-    }
+        const invalidResponse = [
+            "That's not how you petition to Peter.",
+            "Invalid petition. Please try again.",
+            "You're not asking correctly",
+            "Why should I answer to that?",
+            "Please try again tomorrow. Or never...",
+            "I'm tired... Try again another time.",
+            "Not now, I'm busy. Maybe later.",
+            "Fix you petition please.",
+        ];
+        const invalidQuestion = "Please ask Peter a valid question.";
 
+        if (!view.getQuestion().includes('?')) {    // Valid Question check
+            return invalidQuestion;
+        } else if(model.answer) {                   // Valid Petition check
+            return model.answer;
+        } else {                                    // Invalid Response
+            let randomNum = Math.floor(Math.random() * invalidResponse.length);
+            return invalidResponse[randomNum];
+        }
+    }
 }
 
 var view = {
@@ -59,7 +60,6 @@ var view = {
         document.getElementById('petition').addEventListener('input', () => {
             controller.keyPress(event);
         });
-
     },
     getInputText: () => {
         return document.getElementById('petition').value;
@@ -67,11 +67,12 @@ var view = {
     getPetitionLength: () => {
         return document.getElementById('petition').value.length;
     },
-
+    getQuestion: () => {
+        return document.getElementById('question').value;
+    },
     renderInput: () => {
         document.getElementById('petition').value = document.getElementById('petition').value.slice(0, view.getPetitionLength() -1) + controller.getPetitionChar();
     },
-
     renderAnswer: () => {
         document.getElementById('answer').innerHTML = controller.getAnswer();
         
