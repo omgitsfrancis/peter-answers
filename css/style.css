@@ -1,0 +1,51 @@
+.app {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    width: 95%;
+}
+.form-row {
+    display: flex;
+    justify-content: flex-end;
+}
+.form-row > label {
+    flex: 1;
+}
+.form-row > input {
+    flex: 6;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    body {background-color: lightblue; }
+    .app {
+        width: 65%;
+    }
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    body{background-color: yellow;}
+    .app {
+        width: 65%;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    body {background-color: orange;}
+    .app {
+        width: 768px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    body {background-color: lightseagreen}
+    .app {
+        width: 992px;
+    }
+}
