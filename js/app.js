@@ -1,14 +1,23 @@
 var model = {
     answer: "",
     answerToggle: false,
-    petitionText: "Peter please answer the following question"
+    petitionText: "Peter please answer the following question",
+    invalidResponse: [
+        "That's not how you petition to Peter.",
+        "Invalid petition. Please try again.",
+        "You're not asking correctly",
+        "Why should I answer to that?",
+        "Please try again tomorrow. Or never...",
+        "I'm tired... Try again another time.",
+        "Not now, I'm busy. Maybe later.",
+        "Fix you petition please.",
+    ]
 }
 
 var controller = {
     init: () => {
         view.init();
     },
-
     keyPress: (e) => {
         console.log(e.data);
         var petitionLength = view.getPetitionLength();
@@ -31,7 +40,13 @@ var controller = {
     },
 
     getAnswer: () => {
-        return model.answer;
+        if(model.answer) {
+            return model.answer;
+        } else {
+            let randomNum = Math.floor(Math.random() * model.invalidResponse.length);
+            return model.invalidResponse[randomNum];
+        }
+        
     }
 
 }
