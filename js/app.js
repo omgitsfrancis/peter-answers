@@ -8,7 +8,23 @@ var controller = {
     init: () => {
         view.init();
     },
-    keyPress: (e) => {
+    keyDown: (e) => {
+        let len = view.getPetitionLength();
+        
+        if(e.key === '.'){
+            model.answerToggle = !model.answerToggle;
+            document.getElementById('petition').value += model.petitionText[len];
+            return false;
+        } else if (e.key.length === 1 && model.answerToggle) {
+            model.answer += e.key;
+            document.getElementById('petition').value += model.petitionText[len];
+            console.log(model.answer);
+            return false;
+        } else if (e.key === "Backspace") {
+            model.answer = model.answer.slice(0,-1);
+        }
+
+        /*  OLD Code - Delete
         console.log(e.data);
         var petitionLength = view.getPetitionLength();
 
@@ -21,7 +37,9 @@ var controller = {
             model.answer += e.data;
             view.renderInput();
         }
-        console.log("answer: ", model.answer);    
+        console.log("answer: ", model.answer);        
+        */
+        
     },
 
     getPetitionChar: () => {
@@ -37,7 +55,7 @@ var controller = {
             "Please try again tomorrow. Or never...",
             "I'm tired... Try again another time.",
             "Not now, I'm busy. Maybe later.",
-            "Fix you petition please.",
+            "Fix your petition please.",
         ];
         const invalidQuestion = "Please ask Peter a valid question.";
 
@@ -57,9 +75,7 @@ var view = {
         document.getElementById('answerButton').addEventListener('click', () => {
             view.renderAnswer();
         });
-        document.getElementById('petition').addEventListener('input', () => {
-            controller.keyPress(event);
-        });
+        document.getElementById('petition').onkeydown = (event) => {return controller.keyDown(event)};
     },
     getInputText: () => {
         return document.getElementById('petition').value;
@@ -69,9 +85,6 @@ var view = {
     },
     getQuestion: () => {
         return document.getElementById('question').value;
-    },
-    renderInput: () => {
-        document.getElementById('petition').value = document.getElementById('petition').value.slice(0, view.getPetitionLength() -1) + controller.getPetitionChar();
     },
     renderAnswer: () => {
         document.getElementById('answer').innerHTML = controller.getAnswer();
