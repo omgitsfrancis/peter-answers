@@ -1,6 +1,7 @@
 var model = {
     answer: "",
     answerToggle: false,
+    needsReset: false,
     petitionText: "Peter please answer the following question"
 }
 
@@ -11,20 +12,22 @@ var controller = {
     keyDown: (e) => {
         let len = view.getPetitionLength();
         
-        if(e.key === '.'){
+        if(e.key === '.'){ // Period is the secret key
             model.answerToggle = !model.answerToggle;
             document.getElementById('petition').value += model.petitionText[len];
             return false;
-        } else if (e.key.length === 1 && model.answerToggle) {
+        } else if (e.key.length === 1 && model.answerToggle) { // If its a character and in answer mode
             model.answer += e.key;
             document.getElementById('petition').value += model.petitionText[len];
             console.log(model.answer);
             return false;
-        } else if (e.key === "Backspace") {
+        } else if (e.key === "Backspace" && model.answerToggle) { // if its a backpace
             model.answer = model.answer.slice(0,-1);
         }
     },
-
+    getResetStatus: () => {
+        return model.needsReset;
+    },
     getPetitionChar: () => {
         return model.petitionText[view.getPetitionLength()-1];
     },
@@ -40,7 +43,9 @@ var controller = {
             "Fix your petition please.",
         ];
         const invalidQuestion = "Please ask Peter a valid question.";
-        if (!view.getQuestion().includes('?')) {    // Valid Question check
+        model.needsReset = true;
+
+        if (!view.getQuestion()) {                  // Valid Question check
             return invalidQuestion;
         } else if(model.answer) {                   // Valid Petition check
             return "Peter says " + model.answer;
@@ -53,6 +58,7 @@ var controller = {
     reset: () => {
         model.answer = '';
         model.answerToggle = false;
+        model.needsReset = false;
         view.resetUi();
     }
 }
@@ -63,9 +69,31 @@ var view = {
             view.renderAnswer();
         });
         document.getElementById('resetButton').addEventListener('click', controller.reset);
-        document.getElementById('petition').onkeydown = (event) => {return controller.keyDown(event)};
+        document.getElementById('petition').onkeydown = (event) => {
+            if(document.getElementById('petition').value == ''){
+                controller.reset();
+            }
+            return controller.keyDown(event)
+        };
         document.getElementById('question').onkeydown = (event) => {
-            if(event.key === '?') view.renderAnswer();
+            switch(event.key) {
+                case "?":
+                    document.getElementById('question').value += "?";
+                    view.renderAnswer();
+                    break;
+                case "Enter":
+                    if(!document.getElementById('question').value.includes('?')){
+                        document.getElementById('question').value += "?";
+                    }
+                    view.renderAnswer();
+                    break;
+            }
+            
+        };
+        document.getElementById('petition').onfocus = ()=> {
+            if(controller.getResetStatus()){
+                controller.reset();
+            }
         };
     },
     getInputText: () => {
@@ -86,7 +114,7 @@ var view = {
         view.clearPetition();
         view.clearQuestion();
         view.clearAnswer();
-        document.getElementById('question').disabled = false;
+        view.enableQuestion();
     },
     clearPetition: () => {
         document.getElementById('petition').value = '';
@@ -99,6 +127,9 @@ var view = {
     },
     disableQuestion: () => {
         document.getElementById('question').disabled = true;
+    },
+    enableQuestion: () => {
+        document.getElementById('question').disabled = false;
     }
 }
 
