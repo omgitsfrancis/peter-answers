@@ -3,31 +3,28 @@
     justify-content: center;
     flex-direction: column;
     margin: auto;
-    width: 95%;
+    width: 100%;
     font-family: 'Roboto Mono', monospace;
 }
 .form-row {
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
     margin: 10px 0;
     
 }
 .form-row > label {
-    flex: 1;
     font-size: 30px;
     margin: 5px;
 }
 
 .form-row > input {
-    flex: 6;
+    flex-grow: 1;
     border: 0;
     background-color: rgba(0, 0, 0, 0);
     outline: none;
     border-bottom: 5px solid black;
     font-size: 30px;
-}
-input[type="text"]:disabled {
-    background-color: ;
 }
 
 .buttons {
@@ -49,16 +46,16 @@ input[type="text"]:disabled {
 @media (min-width: 576px) {
     body {background-color: lightblue; }
     .app {
-        width: 65%;
+        width: 100%;
     }
 
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-    body{background-color: yellow;}
+    body{background-color: salmon;}
     .app {
-        width: 65%;
+        width: 85%;
     }
 }
 
