@@ -11,17 +11,12 @@ You do this with a petition of "Peter please answer the following question" or "
 ## How does it REALLY work?
 You ARE Peter, so you decide how Peter answers. In the petition, you press the period (.) key then your answer. While typing, the petition will automatically be typed in. When finished typing your answer, press period again and manually finish out the petition. Ask your question and your answer will appear.
 ### Example:
-#### What you type:
 
-**Petition:** .Mark, Jeff, and Peter. following question
-
-**Question:** Who is in this room right now?
-
-#### What you see:
-
-**Petition:** Peter please answer the following question
-
-**Question:** Who is in this room right now?
-
-**Peter says Mark, Jeff, and Peter**
+#### What you type:  
+**Petition:** .Mark, Jeff, and Peter. following question  
+**Question:** Who is in this room right now?  
+#### What you see:  
+**Petition:** Peter please answer the following question  
+**Question:** Who is in this room right now?  
+**Peter says Mark, Jeff, and Peter**  
 
