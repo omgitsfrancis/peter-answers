@@ -107,8 +107,10 @@ var view = {
     },
     renderAnswer: () => {
         document.getElementById('answer').innerHTML = controller.getAnswer();
+        view.loadingBar();
         view.disableQuestion();
         view.clearPetition();
+        
     },
     resetUi: () => {
         view.clearPetition();
@@ -130,6 +132,27 @@ var view = {
     },
     enableQuestion: () => {
         document.getElementById('question').disabled = false;
+    },
+    loadingBar: ()=> {
+       // var bar = document.getElementById('loading');
+        var barInside = document.getElementById('loading-inside');
+        var progress = 0;
+        var interval = setInterval(incr, randomInterval);
+        console.log('button  clicked');
+        //bar.style.display = "none";
+
+        function incr() {
+            console.log('test');
+            if(progress >= 100) {
+                //bar.style.display = "none";
+                clearInterval(interval);
+            } else {
+                progress += 1;
+                barInside.style.width = progress + '%';
+            }
+        }
+
+
     }
 }
 
