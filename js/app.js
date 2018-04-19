@@ -78,7 +78,7 @@ var view = {
         document.getElementById('question').onkeydown = (event) => {
             switch(event.key) {
                 case "?":
-                    document.getElementById('question').value += "?";
+                    //document.getElementById('question').value += "?";
                     view.renderAnswer();
                     break;
                 case "Enter":
@@ -112,11 +112,18 @@ var view = {
         view.clearPetition();
         
     },
+    showAnswer: () => {
+        document.getElementById('answer').style.display = "block";
+    },
+    hideAnswer: () => {
+        document.getElementById('answer').style.display = "none";
+    },
     resetUi: () => {
         view.clearPetition();
         view.clearQuestion();
         view.clearAnswer();
         view.enableQuestion();
+        view.hideAnswer();
     },
     clearPetition: () => {
         document.getElementById('petition').value = '';
@@ -134,17 +141,18 @@ var view = {
         document.getElementById('question').disabled = false;
     },
     loadingBar: ()=> {
-       // var bar = document.getElementById('loading');
+       var bar = document.getElementById('loading');
         var barInside = document.getElementById('loading-inside');
         var progress = 0;
-        var interval = setInterval(incr, randomInterval);
+        var interval = setInterval(incr, 10/*randominterval*/);
         console.log('button  clicked');
-        //bar.style.display = "none";
+        bar.style.display = "block";
 
         function incr() {
             console.log('test');
             if(progress >= 100) {
-                //bar.style.display = "none";
+                bar.style.display = "none";
+                view.showAnswer();
                 clearInterval(interval);
             } else {
                 progress += 1;
