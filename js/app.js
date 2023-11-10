@@ -14,11 +14,13 @@ var controller = {
         
         if(e.key === '.'){ // Period is the secret key
             model.answerToggle = !model.answerToggle;
-            document.getElementById('petition').value += model.petitionText[len];
+            if (len < model.petitionText.length)
+                document.getElementById('petition').value += model.petitionText[len];
             return false;
         } else if (e.key.length === 1 && model.answerToggle) { // If its a character and in answer mode
             model.answer += e.key;
-            document.getElementById('petition').value += model.petitionText[len];
+            if (len < model.petitionText.length)
+                document.getElementById('petition').value += model.petitionText[len];
             console.log(model.answer);
             return false;
         } else if (e.key === "Backspace" && model.answerToggle) { // if its a backpace
